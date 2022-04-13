@@ -1,4 +1,4 @@
-# vue-notes
+# vue-slider
 
 ## Project setup
 ```

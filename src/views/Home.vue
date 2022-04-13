@@ -1,18 +1,58 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <carousel :settings="settings" :breakpoints="breakpoints">
+    <slide class="card__wrapper" v-for="item in items" :key="item.id">
+      <card
+        :name="`${item.lvl}`"
+        :title="item.title"
+        :imgUrl="item.img"
+        :link="'/' + item.alias">
+        <template #body>
+          {{ item.description }}
+        </template>
+        <template #footer>
+          <AppItem :info="item.info" />
+        </template>
+      </card>
+    </slide>
+    <template #addons>
+      <Navigation />
+    </template>
+  </carousel>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Items from '@/seeders/items.js'
+import Card from '@/components/UI/Card.vue'
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Navigation } from 'vue3-carousel'
+import AppItem from '@/components/UI/AppItem.vue'
 
 export default {
-  name: 'Home',
+  data() {
+    return {
+      items: Items,
+      settings: {
+        itemsToShow: 2,
+        wrapAround: true,
+        snapAlign: 'center'
+      },
+      breakpoints: {
+        300: {
+          itemsToShow: 1
+        },
+        700: {
+          itemsToShow: 2
+        }
+      }
+    }
+  },
+
   components: {
-    HelloWorld
+    Card,
+    Carousel,
+    Slide,
+    Navigation,
+    AppItem
   }
 }
 </script>
